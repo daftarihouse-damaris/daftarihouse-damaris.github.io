@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daftari House</title>
+<style>
+:root{--c:#1f2a44;--g:#c9a24b;--b:#fbf6ee}
+*{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;background:var(--b);color:var(--c)}
+header{background:var(--c);color:#fff;padding:24px 16px;text-align:center}
+header h1{margin:0;color:var(--g)}header p{margin:6px 0 0}
+nav{display:flex;justify-content:center;gap:18px;padding:12px;background:#fff;flex-wrap:wrap}
+nav a{color:var(--c);font-weight:bold;text-decoration:none}
+section{max-width:760px;margin:0 auto;padding:24px 16px}
+.btn{display:inline-block;background:var(--g);color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold;margin:6px 6px 0 0;border:0;font-size:16px;cursor:pointer}
+.card{background:#fff;border:1px solid #e5d9bf;border-radius:12px;padding:16px;margin:12px 0}
+label{display:block;margin:10px 0 4px;font-weight:bold}
+input,select{width:100%;padding:10px;border:1px solid #bbb;border-radius:8px;font-size:16px}
+#sheet{background:#fff;border:2px solid var(--c);padding:16px;margin-top:16px}
+#sheet h2{text-align:center;margin:0 0 4px}
+table{width:100%;border-collapse:collapse}td,th{border:1px solid #444;padding:12px 6px;text-align:left}
+th{color:#fff}
+footer{text-align:center;padding:20px;font-size:14px}
+@media print{header,nav,.noprint,footer{display:none}body{background:#fff}section{padding:0}}
+</style></head><body>
+<header><h1>Daftari House</h1><p>Planners &amp; Swahili–English translation<br>by Xiara Digital Products</p></header>
+<nav><a href="#planner">Free Planner</a><a href="#shop">Shop</a><a href="#translate">Translation</a></nav>
+
+<section id="planner">
+<h2>Make your free planner</h2>
+<p>Choose a style, name it, then print it or save it as a PDF.</p>
+<div class="card noprint">
+<label>Planner title</label><input id="t" placeholder="e.g. My Week">
+<label>Type</label><select id="k"><option value="w">Weekly Planner</option><option value="h">Habit Tracker</option><option value="b">Monthly Budget</option></select>
+<label>Colour</label><select id="col"><option value="#1f2a44">Navy</option><option value="#6f8f72">Sage green</option><option value="#c98b8b">Blush</option></select>
+<button class="btn" onclick="make()">Create planner</button>
+</div>
+<div id="sheet" style="display:none"></div>
+<p class="noprint"><button class="btn" id="pb" style="display:none" onclick="window.print()">Print / Save as PDF</button></p>
+</section>
+
+<section id="shop" class="noprint">
+<h2>Want the full planners?</h2>
+<div class="card"><b>Digital planners (instant download)</b><br>Printable PDFs, paid in KES or USD.<br>
+<a class="btn" href="https://selar.com/m/thestylevault">Shop on Selar</a></div>
+<div class="card"><b>Printed planners &amp; journals</b><br>Paperback books delivered by Amazon.<br>
+<a class="btn" href="https://www.amazon.com/s?k=Damaris+Kavindu+Nguku">See books on Amazon</a></div>
+</section>
+
+<section id="translate" class="noprint">
+<h2>English ↔ Swahili translation</h2>
+<div class="card">Native Swahili and English speaker. Documents, websites, and medical and everyday texts translated carefully and on time.<br>
+<a class="btn" href="https://www.fiverr.com/xiara1234">Hire me on Fiverr</a></div>
+</section>
+
+<footer>© Daftari House · by Xiara Digital Products</footer>
+
+<script>
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function rows(labels,cols){return labels.map(function(l){var r='<td>'+l+'</td>';for(var i=1;i<cols;i++)r+='<td>&nbsp;</td>';return '<tr>'+r+'</tr>'}).join('')}
+function make(){
+var t=esc(document.getElementById('t').value||'My Planner');
+var k=document.getElementById('k').value;
+var col=document.getElementById('col').value;
+var s=document.getElementById('sheet');
+var heads,body,blank=['','','','','','','',''];
+if(k=='w'){heads=['Day','Priorities','Notes'];body=rows(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],3)}
+else if(k=='h'){heads=['Habit','M','T','W','T','F','S','S'];body=rows(blank,8)}
+else{heads=['Category','Planned','Actual'];body=rows(['Rent','Food','Transport','Savings','Airtime / Data','Other','',''],3)}
+var th='<tr>'+heads.map(function(x){return '<th style="background:'+col+'">'+x+'</th>'}).join('')+'</tr>';
+s.style.borderColor=col;
+s.innerHTML='<h2 style="color:'+col+'">'+t+'</h2><p style="text-align:center;margin:0 0 12px">Daftari House</p><table>'+th+body+'</table>';
+s.style.display='block';
+document.getElementById('pb').style.display='inline-block';
+s.scrollIntoView();
+}
+</script>
+</body></html>
